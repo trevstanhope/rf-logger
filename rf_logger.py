@@ -22,6 +22,7 @@ def sweep_chunks(RFE, start_freq, end_freq, chunk, delay):
         print 'Sweeping from %s to %s...' % (start, end)
         dict = RFE.timed_sweep(start, end, delay)
         for j, k in dict.iteritems():
+            print j, k
             if start in sweep:
                 if k > sweep[start]:
                     sweep[start] = k
@@ -32,10 +33,10 @@ def sweep_chunks(RFE, start_freq, end_freq, chunk, delay):
     
 if __name__ == '__main__':
     port = '/dev/ttyUSB0'
-    start_freq = 15000 # kHz
+    start_freq = 100000 # kHz
     end_freq = 2700000 # kHz
-    chunk = 50000 # kHz
-    delay = 1 # seconds
+    chunk = 100000 # kHz
+    delay = 5 # seconds
     RFE = RFExplorer(port)
     filename = raw_input("Enter the name of the CSV file that you want generated: ")
     csvfile = open(filename, 'w')
