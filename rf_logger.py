@@ -20,7 +20,11 @@ def sweep_chunks(RFE, start_freq, end_freq, chunk, delay):
     for start in freq_list:
         end = str(int(start) + chunk)
         print 'Sweeping from %s to %s...' % (start, end)
-        dict = RFE.timed_sweep(start, end, delay)
+        try:
+            dict = RFE.timed_sweep(start, end, delay)
+        except ValueError:
+            manual_value = raw_input("Manual value entry: ")
+            dict = {start : manual_value}
         for j, k in dict.iteritems():
             print j, k
             if start in sweep:
@@ -59,7 +63,7 @@ if __name__ == '__main__':
                 sample.append(str(i))
             sample.append('\n')
             csvfile.write(','.join(sample))
-        except Exception as error:
+        except KeyboardInterrupt as error:
             print str(error)
             csvfile.close()
             break
